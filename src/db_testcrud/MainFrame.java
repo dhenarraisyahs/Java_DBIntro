@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -49,6 +50,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jlTanggal = new javax.swing.JLabel();
         jlJam = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -87,21 +89,29 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(153, 0, 0));
         jPanel6.setLayout(null);
 
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Calibri", 2, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("FORM PENDAFTARAN SMK TELKOM MALANG");
+        jLabel5.setText("The Real Informatics School");
         jPanel6.add(jLabel5);
-        jLabel5.setBounds(116, 5, 518, 31);
+        jLabel5.setBounds(118, 30, 510, 30);
 
+        jlTanggal.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jlTanggal.setForeground(new java.awt.Color(255, 255, 255));
         jlTanggal.setText("Tanggal");
         jPanel6.add(jlTanggal);
         jlTanggal.setBounds(650, 40, 100, 20);
 
+        jlJam.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jlJam.setForeground(new java.awt.Color(255, 255, 255));
         jlJam.setText("Jam");
         jPanel6.add(jlJam);
         jlJam.setBounds(650, 64, 100, 20);
+
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("FORM PENDAFTARAN SMK TELKOM MALANG");
+        jPanel6.add(jLabel6);
+        jLabel6.setBounds(116, 5, 518, 31);
 
         getContentPane().add(jPanel6);
         jPanel6.setBounds(0, 0, 790, 100);
@@ -342,6 +352,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String tanggal = dateFormat.format(jdcTL.getDate());
+        
         if ("".equals(jtfNis.getText()) || "".equals(jtaAlamat.getText()) || "".equals(jtfKelas.getText()) || tanggal.equals("") || "".equals(jtfNama.getText()) || "".equals(jtfEmail.getText())) {
             JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -432,14 +443,21 @@ public class MainFrame extends javax.swing.JFrame {
         if (baris != -1) {
             jtfNis.setText(jtSiswa.getValueAt(baris, 0).toString());
             jtfNama.setText(jtSiswa.getValueAt(baris, 1).toString());
-            if ("Laki-laki".equals(jtSiswa.getValueAt(baris, 2).toString())) {
+            if ("Laki-laki".equals(jtSiswa.getValueAt(baris, 3).toString())) {
                 jrbLK.setSelected(true);
             } else {
                 jrbPR.setSelected(true);
             }
-            jtfKelas.setText(jtSiswa.getValueAt(baris, 3).toString());
-            jtfEmail.setText(jtSiswa.getValueAt(baris, 4).toString());
-            jtaAlamat.setText(jtSiswa.getValueAt(baris, 5).toString());
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateFormat = null;
+            try
+            {
+                dateFormat = date.parse(jtSiswa.getValueAt(baris,2).toString());
+            }catch(ParseException ex)
+            {}
+            jtfKelas.setText(jtSiswa.getValueAt(baris, 4).toString());
+            jtfEmail.setText(jtSiswa.getValueAt(baris, 5).toString());
+            jtaAlamat.setText(jtSiswa.getValueAt(baris, 6).toString());
         }
     }//GEN-LAST:event_jtSiswaMouseClicked
 
@@ -509,6 +527,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
